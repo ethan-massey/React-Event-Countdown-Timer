@@ -10,18 +10,23 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { time } from "date-fns/locale/af";
 
 
-const TenDaysFromNow = () => {
+const oneDayFromNow = () => {
   var today = new Date();
-  today.setDate(today.getDate() + 10); 
-  return new Date(today.getFullYear(), today.getMonth(), today.getDay(), 0, 0, 0);
+  var tomorrow = new Date();
+  tomorrow.setDate(today.getDate()+1);
+  // set to midnight
+  tomorrow.setHours(0,0,0,0);
+  return tomorrow;
 }
 
 export default function EventInput(props) {
-  const [eventDetails, setEventDetails] = useState({Name: 0, Date: TenDaysFromNow()})
+  const [eventDetails, setEventDetails] = useState({Name: 0, Date: oneDayFromNow()})
   const [nameError, setNameError] = useState("");
   const [dateError, setDateError] = useState("");
+  const [timeError, setTimeError] = useState("");
 
   // for event name input
   const handleNameChange = (event) => {
@@ -33,24 +38,41 @@ export default function EventInput(props) {
     setEventDetails({...eventDetails, Date: date});
   }
 
+  // returns false if date is before today
+  // purely M/D/Y, time is irrelevant
+  const isDateValid = (date) => {
+    var today = new Date();
+    var dateCopy = new Date(date);
+    today.setHours(0,0,0,0);
+    dateCopy.setHours(0,0,0,0);
+    return (dateCopy >= today);
+  }
+
   // adds error messages and returns whether all input is valid
   const validateUserInputs = () => {
-    // name
+    var validInputs = true;
+    // empty name
     if(eventDetails.Name == ""){
       setNameError("Event Name must not be empty.");
-      return false;
+      validInputs = false;
     }else{
       setNameError(""); // change back to "" if there was error before
     }
-    // date & time
-    var today = new Date();
-    if(eventDetails.Date <= today){
+    // if date is before today
+    if(!isDateValid(eventDetails.Date)){
       setDateError("Event Date must be in future.");
-      return false;
+      validInputs = false;
     }else{
-      setDateError(""); // change back to "" if there was error before
+      setDateError("");
     }
-    return true;
+    // if date is valid but time before current time
+    if(isDateValid(eventDetails.Date) && eventDetails.Date < (new Date())){
+      setTimeError("Event Time must be in future.");
+      validInputs = false;
+    }else{
+        setTimeError("");
+    }
+    return validInputs;
   }
 
   const handleSubmit = () => {
@@ -104,16 +126,31 @@ export default function EventInput(props) {
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}/>}
+          {timeError == "" ?
           <KeyboardTimePicker
-            margin="normal"
-            id="time-picker"
-            label="Event Time (Optional)"
-            name="Time"
-            value={eventDetails.Date}
-            onChange={handleDateTimeChange}
-            KeyboardButtonProps={{
-              'aria-label': 'change time',
+          margin="normal"
+          id="time-picker"
+          label="Event Time (Optional)"
+          name="Time"
+          value={eventDetails.Date}
+          onChange={handleDateTimeChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change time',
           }}/>
+          :
+          <KeyboardTimePicker
+          error
+          helperText={timeError}
+          margin="normal"
+          id="time-picker"
+          label="Event Time (Optional)"
+          name="Time"
+          value={eventDetails.Date}
+          onChange={handleDateTimeChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change time',
+          }}/>
+          }
         </MuiPickersUtilsProvider>
         <Button variant="contained" color="primary" onClick={handleSubmit}>
           Start Timer!
