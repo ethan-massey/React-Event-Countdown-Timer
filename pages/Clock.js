@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from "react"
 import Button from '@material-ui/core/Button';
+import Confetti from 'react-confetti'
 
 export default function Clock(props){
     const [difference, setDifference] = useState(props.eventDetails.Date - (new Date()));
+    const [readyForConfetti, setReadyForConfetti] = useState(false);
     
     const getReadableTimeFromMilliseconds = (milli) => {
         var days = Math.floor(milli/1000/60/60/24);
@@ -30,11 +32,21 @@ export default function Clock(props){
         const interval = setInterval(() => {
             setDifference(props.eventDetails.Date - (new Date()))
         }, 1000);
-        return () => clearInterval(interval);
+        if(difference <= 0){
+            setDifference(0);
+            clearInterval(interval);
+        }
     }, []);
 
     return (
         <div>
+            {console.log(difference)}
+            {difference == 0 ?
+            <Confetti/>
+            :
+            null
+            }
+            <Confetti/>
             {getReadableTimeFromMilliseconds(difference)}
             <h1>until {props.eventDetails.Name}</h1>
             <Button variant="contained" color="secondary" onClick={()=>{props.onClickBack()}}>BACK</Button>

@@ -10,7 +10,6 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { time } from "date-fns/locale/af";
 
 
 const oneDayFromNow = () => {
