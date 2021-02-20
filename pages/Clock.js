@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react"
 import Button from '@material-ui/core/Button';
 import Confetti from 'react-confetti'
+import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
 export default function Clock(props){
@@ -22,8 +23,8 @@ export default function Clock(props){
         var seconds = Math.floor(milli/1000);
         return (
             <div>
-                <h1>{days} Days, and</h1>
-                <h1>{("0" + hours).slice(-2)}:{("0" + minutes).slice(-2)}:{("0" + seconds).slice(-2)}</h1>
+                <h1 style={{fontSize: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>{days} Days, and</h1>
+                <h1 style={{fontSize: '10rem'}}>{("0" + hours).slice(-2)}:{("0" + minutes).slice(-2)}:{("0" + seconds).slice(-2)}</h1>
             </div>
         )
     }
@@ -36,16 +37,19 @@ export default function Clock(props){
     }, []);
 
     return (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             {difference < 0 ?
             <div>
                 <Confetti/>
-                <h1>00:00:00</h1>
+                <div>
+                    <h1 style={{fontSize: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>0 Days, and</h1>
+                    <h1 style={{fontSize: '10rem'}}>00:00:00</h1>
+                </div>
             </div>
             :
             getReadableTimeFromMilliseconds(difference)
             }
-            <h1>until {props.eventDetails.Name}</h1>
+            <h1 style={{fontSize: '4rem'}} >until {props.eventDetails.Name}</h1>
             <Button variant="contained" color="secondary" onClick={()=>{props.onClickBack()}}>BACK</Button>
         </div>
     )

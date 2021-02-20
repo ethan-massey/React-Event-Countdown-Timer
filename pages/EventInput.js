@@ -86,18 +86,19 @@ export default function EventInput(props) {
 
   return (
     <div>
-      <h4>Enter event details below.</h4>
+      <h1 className={styles.title}>Countdown Timer</h1>
       <form>
         {/* Ternary for if name has an error message from validation */}
         {nameError == "" ? 
-        <TextField label="Event Name" name="Name" variant="standard" onChange={handleNameChange}/>
+        <TextField style={{margin:'30px'}} label="Event Name" name="Name" variant="standard" onChange={handleNameChange}/>
         :
-        <TextField error helperText={nameError} label="Event Name" name="Name" variant="standard" onChange={handleNameChange}/>
+        <TextField style={{margin:'30px'}} error helperText={nameError} label="Event Name" name="Name" variant="standard" onChange={handleNameChange}/>
         }
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           {/* Ternary for if date has an error message from validation */}
           {dateError == "" ?
           <KeyboardDatePicker
+          style={{margin:'30px'}}
           disableToolbar
           variant="inline"
           format="MM/dd/yyyy"
@@ -111,6 +112,7 @@ export default function EventInput(props) {
             'aria-label': 'change date',
           }}/> :
           <KeyboardDatePicker
+          style={{margin:'30px'}}
           error
           helperText={dateError}
           disableToolbar
@@ -127,6 +129,7 @@ export default function EventInput(props) {
           }}/>}
           {timeError == "" ?
           <KeyboardTimePicker
+          style={{margin:'30px'}}
           margin="normal"
           id="time-picker"
           label="Event Time (Optional)"
@@ -138,6 +141,7 @@ export default function EventInput(props) {
           }}/>
           :
           <KeyboardTimePicker
+          style={{margin:'30px'}}
           error
           helperText={timeError}
           margin="normal"
@@ -151,7 +155,7 @@ export default function EventInput(props) {
           }}/>
           }
         </MuiPickersUtilsProvider>
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
+        <Button style={{margin:'30px', padding: '10px', minHeight: '75px'}} variant="contained" color="primary" onClick={handleSubmit}>
           Start Timer!
         </Button>
       </form>
