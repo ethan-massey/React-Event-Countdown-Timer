@@ -20,6 +20,10 @@ const TenDaysFromNow = () => {
 
 
 export default function Home() {
+  const [eventDetails, setEventDetails] = useState({Name: 0, Date: TenDaysFromNow()})
+  const [nameError, setNameError] = useState("");
+  const [dateError, setDateError] = useState("");
+
   // for event name input
   const handleNameChange = (event) => {
     setEventDetails({...eventDetails, Name: event.target.value});
@@ -27,62 +31,22 @@ export default function Home() {
 
   // for date or time input
   const handleDateTimeChange = (date) => {
-    console.log(date);
     setEventDetails({...eventDetails, Date: date});
   }
-
-  const [eventDetails, setEventDetails] = useState({Name: 0, Date: TenDaysFromNow()})
-  const [userInputForms, setUserInputForms] = useState({
-    NameForm: <TextField label="Event Name" name="Name" variant="outlined" onChange={handleNameChange}/>,
-    DateForm: <KeyboardDatePicker
-    disableToolbar
-    variant="inline"
-    format="MM/dd/yyyy"
-    margin="normal"
-    id="date-picker-inline"
-    label="Event Date"
-    name="Date"
-    value={eventDetails.Date}
-    onChange={handleDateTimeChange}
-    KeyboardButtonProps={{
-      'aria-label': 'change date',
-    }}/>,
-    TimeForm: <KeyboardTimePicker
-    margin="normal"
-    id="time-picker"
-    label="Event Time (Optional)"
-    name="Time"
-    value={eventDetails.Date}
-    onChange={handleDateTimeChange}
-    KeyboardButtonProps={{
-      'aria-label': 'change time',
-    }}/>
-  })
 
   const validateUserInputs = () => {
     // validate name
     if(eventDetails.Name == ""){
-      setUserInputForms({...userInputForms, NameForm: <TextField label="Event Name" error name="Name" helperText="Event name can't be empty." variant="outlined" onChange={handleNameChange}/>})
+      setNameError("Event Name must not be empty.");
+    }else{
+      setNameError(""); // change back to "" if there was error before
     }
     // validate date & time
     var today = new Date();
     if(eventDetails.Date <= today){
-      setUserInputForms({...userInputForms, 
-        DateForm: <KeyboardDatePicker
-        disableToolbar
-        error
-        helperText="Event date must be in the future."
-        variant="inline"
-        format="MM/dd/yyyy"
-        margin="normal"
-        id="date-picker-inline"
-        label="Event Date"
-        name="Date"
-        value={eventDetails.Date}
-        onChange={handleDateTimeChange}
-        KeyboardButtonProps={{
-          'aria-label': 'change date',
-        }}/>})
+      setDateError("Event Date must be in future.");
+    }else{
+      setDateError(""); // change back to "" if there was error before
     }
   }
 
@@ -104,10 +68,53 @@ export default function Home() {
       <h1>Countdown timer</h1>
       <h4>Enter event details below.</h4>
       <form>
-        {userInputForms.NameForm}
+        {/* Ternary for if name has an error message from validation */}
+        {nameError == "" ? 
+        <TextField label="Event Name" name="Name" variant="outlined" onChange={handleNameChange}/>
+        :
+        <TextField error helperText={nameError} label="Event Name" name="Name" variant="outlined" onChange={handleNameChange}/>
+        }
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          {userInputForms.DateForm}
-          {userInputForms.TimeForm}
+          {/* Ternary for if date has an error message from validation */}
+          {dateError == "" ?
+          <KeyboardDatePicker
+          disableToolbar
+          variant="inline"
+          format="MM/dd/yyyy"
+          margin="normal"
+          id="date-picker-inline"
+          label="Event Date"
+          name="Date"
+          value={eventDetails.Date}
+          onChange={handleDateTimeChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}/> :
+          <KeyboardDatePicker
+          error
+          helperText={dateError}
+          disableToolbar
+          variant="inline"
+          format="MM/dd/yyyy"
+          margin="normal"
+          id="date-picker-inline"
+          label="Event Date"
+          name="Date"
+          value={eventDetails.Date}
+          onChange={handleDateTimeChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}/>}
+          <KeyboardTimePicker
+            margin="normal"
+            id="time-picker"
+            label="Event Time (Optional)"
+            name="Time"
+            value={eventDetails.Date}
+            onChange={handleDateTimeChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change time',
+          }}/>
         </MuiPickersUtilsProvider>
         <Button variant="contained" color="primary" onClick={handleSubmit}>
           Start Timer!
