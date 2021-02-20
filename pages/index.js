@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EventInput from "./EventInput"
 import Clock from "./Clock"
+import styles from '../styles/Home.module.css'
 
 export default function App() {
   const [isReadyForClock, setIsReadyForClock] = useState(false);
@@ -17,8 +18,8 @@ export default function App() {
 
 
   return (
-    <div>
-      <h1>Countdown Timer</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Countdown Timer</h1>
       {isReadyForClock ?
         <Clock eventDetails={eventDetails} onClickBack={setNotReadyForClock}/>
         :

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react"
 import Button from '@material-ui/core/Button';
 import Confetti from 'react-confetti'
+import styles from '../styles/Home.module.css'
 
 export default function Clock(props){
     const [difference, setDifference] = useState(props.eventDetails.Date - (new Date()));
@@ -37,11 +38,13 @@ export default function Clock(props){
     return (
         <div>
             {difference < 0 ?
-            <Confetti/>
+            <div>
+                <Confetti/>
+                <h1>00:00:00</h1>
+            </div>
             :
-            null
+            getReadableTimeFromMilliseconds(difference)
             }
-            {getReadableTimeFromMilliseconds(difference)}
             <h1>until {props.eventDetails.Name}</h1>
             <Button variant="contained" color="secondary" onClick={()=>{props.onClickBack()}}>BACK</Button>
         </div>

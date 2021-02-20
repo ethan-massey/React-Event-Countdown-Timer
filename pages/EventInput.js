@@ -90,9 +90,9 @@ export default function EventInput(props) {
       <form>
         {/* Ternary for if name has an error message from validation */}
         {nameError == "" ? 
-        <TextField label="Event Name" name="Name" variant="outlined" onChange={handleNameChange}/>
+        <TextField label="Event Name" name="Name" variant="standard" onChange={handleNameChange}/>
         :
-        <TextField error helperText={nameError} label="Event Name" name="Name" variant="outlined" onChange={handleNameChange}/>
+        <TextField error helperText={nameError} label="Event Name" name="Name" variant="standard" onChange={handleNameChange}/>
         }
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           {/* Ternary for if date has an error message from validation */}
