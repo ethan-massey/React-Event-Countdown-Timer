@@ -5,7 +5,6 @@ export default function Clock(props){
     const [difference, setDifference] = useState(props.eventDetails.Date - (new Date()));
     
     const getReadableTimeFromMilliseconds = (milli) => {
-        var totalTime = milli;
         var days = Math.floor(milli/1000/60/60/24);
         if(days > 0){
             milli -= days*1000*60*60*24
