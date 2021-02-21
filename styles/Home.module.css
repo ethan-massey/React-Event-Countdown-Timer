@@ -185,6 +185,14 @@
     align-items: center;
   }
 
+  .clock_page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
   .days_remain {
     font-size: 30px;
   }
