@@ -118,13 +118,6 @@
   height: 1em;
 }
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
-}
-
 .inputitem {
   margin: 30px;
 }
@@ -141,12 +134,85 @@
   margin-top: 3rem;
 }
 
-.blink_me {
+.main_timer_success {
+  font-size: 10rem;
+  color: green;
   animation: blinker 1s linear infinite;
 }
 
 @keyframes blinker {
   50% {
     opacity: 0;
+  }
+}
+
+.days_remain {
+  font-size: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main_timer {
+  font-size: 10rem;
+}
+
+.clock_page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.until {
+  font-size: 4rem;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .clock_container {
+    max-width: 100vw;
+    border-style: dotted;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .days_remain {
+    font-size: 30px;
+  }
+
+  .main_timer {
+    font-size: 60px;
+    padding-bottom: 100px;
+  }
+
+  .main_timer_success {
+    animation: blinker 1s linear infinite;
+    font-size: 60px;
+    padding-bottom: 100px;
+    color: green;
+  }
+
+  .until {
+    font-size: 40px;
+  }
+
+  .blink_me {
+    animation: blinker 1s linear infinite;
+  }
+
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
   }
 }

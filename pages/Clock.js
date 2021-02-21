@@ -26,9 +26,9 @@ export default function Clock(props){
         }
         var seconds = Math.floor(milli/1000);
         return (
-            <div>
-                <h1 style={{fontSize: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>{days} Days, and</h1>
-                <h1 style={{fontSize: '10rem'}}>{("0" + hours).slice(-2)}:{("0" + minutes).slice(-2)}:{("0" + seconds).slice(-2)}</h1>
+            <div className={styles.clock_container}>
+                <h1 className={styles.days_remain}>{days} Days, and</h1>
+                <h1 className={styles.main_timer}>{("0" + hours).slice(-2)}:{("0" + minutes).slice(-2)}:{("0" + seconds).slice(-2)}</h1>
             </div>
         )
     }
@@ -42,13 +42,13 @@ export default function Clock(props){
     }, []);
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <div className={styles.clock_page}>
             {difference < 0 ?
             <div>
                 <Confetti/>
-                <div>
-                    <h1 style={{fontSize: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>0 Days, and</h1>
-                    <h1 className={styles.blink_me} style={{fontSize: '10rem', color: 'green'}}>00:00:00</h1>
+                <div className={styles.clock_container}>
+                    <h1 className={styles.days_remain}>0 Days, and</h1>
+                    <h1 className={styles.main_timer_success}>00:00:00</h1>
                 </div>
             </div>
             :
@@ -56,7 +56,7 @@ export default function Clock(props){
             }
             {/* fails in prerender. Have to hold Name in state and call setState in useEffect*/}
             {/* <h1 style={{fontSize: '4rem'}} >until {props.eventDetails.Name}</h1> */}
-            <h1 style={{fontSize: '4rem'}} >until {eventName}</h1>
+            <h1 className={styles.until} >until {eventName}</h1>
             <Button variant="contained" color="secondary" onClick={()=>{props.onClickBack()}}>BACK</Button>
         </div>
     )
