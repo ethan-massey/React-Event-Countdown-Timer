@@ -6,7 +6,10 @@ import styles from '../styles/Home.module.css'
 
 
 export default function Clock(props){
-    const [difference, setDifference] = useState(props.eventDetails.Date - (new Date()));
+    // fails in prerender
+    // const [difference, setDifference] = useState(props.eventDetails.Date - (new Date()));
+    const [difference, setDifference] = useState(0);
+    const [eventName, setEventName] = useState("");
 
     const getReadableTimeFromMilliseconds = (milli) => {
         var days = Math.floor(milli/1000/60/60/24);
@@ -31,6 +34,7 @@ export default function Clock(props){
     }
 
     useEffect(() => {
+        setEventName(props.eventDetails.Name);
         const interval = setInterval(() => {
             setDifference(props.eventDetails.Date - (new Date()))
         }, 1000);
@@ -50,7 +54,9 @@ export default function Clock(props){
             :
             getReadableTimeFromMilliseconds(difference)
             }
-            <h1 style={{fontSize: '4rem'}} >until {props.eventDetails.Name}</h1>
+            {/* fails in prerender. Have to hold Name in state and call setState in useEffect*/}
+            {/* <h1 style={{fontSize: '4rem'}} >until {props.eventDetails.Name}</h1> */}
+            <h1 style={{fontSize: '4rem'}} >until {eventName}</h1>
             <Button variant="contained" color="secondary" onClick={()=>{props.onClickBack()}}>BACK</Button>
         </div>
     )
