@@ -4,21 +4,23 @@ import Confetti from 'react-confetti'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
+
 export default function Clock(props){
     const [difference, setDifference] = useState(props.eventDetails.Date - (new Date()));
     
+    audio.play();
     const getReadableTimeFromMilliseconds = (milli) => {
         var days = Math.floor(milli/1000/60/60/24);
         if(days > 0){
-            milli -= days*1000*60*60*24
+            milli -= days*1000*60*60*24;
         }
         var hours = Math.floor(milli/1000/60/60);
         if(hours > 0){
-            milli -= hours*1000*60*60
+            milli -= hours*1000*60*60;
         }
         var minutes = Math.floor(milli/1000/60);
         if(minutes > 0){
-            milli -= minutes*1000*60
+            milli -= minutes*1000*60;
         }
         var seconds = Math.floor(milli/1000);
         return (
@@ -28,7 +30,6 @@ export default function Clock(props){
             </div>
         )
     }
-
 
     useEffect(() => {
         const interval = setInterval(() => {
