@@ -29,6 +29,7 @@ export default function Clock(props){
         )
     }
 
+
     useEffect(() => {
         const interval = setInterval(() => {
             setDifference(props.eventDetails.Date - (new Date()))
