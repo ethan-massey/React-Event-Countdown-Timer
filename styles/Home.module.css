@@ -140,3 +140,13 @@
   max-width: 800px;
   margin-top: 3rem;
 }
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

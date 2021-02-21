@@ -43,7 +43,7 @@ export default function Clock(props){
                 <Confetti/>
                 <div>
                     <h1 style={{fontSize: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>0 Days, and</h1>
-                    <h1 style={{fontSize: '10rem'}}>00:00:00</h1>
+                    <h1 className={styles.blink_me} style={{fontSize: '10rem', color: 'green'}}>00:00:00</h1>
                 </div>
             </div>
             :
