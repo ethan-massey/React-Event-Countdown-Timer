@@ -56,7 +56,9 @@ export default function Clock(props){
             }
             {/* fails in prerender. Have to hold Name in state and call setState in useEffect*/}
             {/* <h1 style={{fontSize: '4rem'}} >until {props.eventDetails.Name}</h1> */}
-            <h1 className={styles.until} >until {eventName}</h1>
+            <div className={styles.clock_container}>
+                <h1 className={styles.until}>until {eventName}</h1>
+            </div>
             <Button variant="contained" color="secondary" onClick={()=>{props.onClickBack()}}>BACK</Button>
         </div>
     )
