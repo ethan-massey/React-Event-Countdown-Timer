@@ -87,7 +87,7 @@ export default function EventInput(props) {
   return (
     <div>
       <h1 className={styles.title}>Countdown Timer</h1>
-      <form>
+      <form className={styles.clock_container}>
         {/* Ternary for if name has an error message from validation */}
         {nameError == "" ? 
         <TextField style={{margin:'30px'}} label="Event Name" name="Name" variant="standard" onChange={handleNameChange}/>
